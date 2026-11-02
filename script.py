@@ -31,7 +31,7 @@ def main() -> None:
         sys.exit(1)
 
     destination_language = (
-        input("Enter the destination language code, for example fr, de, or es: ")
+        input("Enter the destination language code, for example fr, de, hi or es: ")
         .strip()
         .lower()
     )
