@@ -2,9 +2,6 @@ A simple Python script for translating .po files.
 
 The script loads a PO file, iterates over each untranslated msgid using the googletrans library, and saves the translated text to the message's msgstr.
 
-Translated files are saved separately so the original PO file is not modified.
-
-Note: I originally created this project in 2023 while working regularly with translations. I no longer work with translations, so this project is not actively maintained. It remains available for anyone who may find it useful.
 
 Requirements
 Docker
