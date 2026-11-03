@@ -1,74 +1,88 @@
-A simple Python script for translating .po files.
+# POTranslation
 
-The script loads a PO file, iterates over each untranslated msgid using the googletrans library, and saves the translated text to the message's msgstr.
+A simple Python script for translating `.po` files with [`googletrans`](https://pypi.org/project/googletrans/).
 
+The script reads a PO file, translates messages whose `msgstr` is empty, and saves the translated text to the corresponding `msgstr`. Messages that already have a translation are skipped.
 
-Requirements
-Docker
-Python 3.12
-Dependencies listed in requirements.txt
+## Requirements
 
-Why Python 3.12?
-This project uses googletrans==4.0.0-rc1 which 3.13 doesn't support
+- Python 3.12
+- Dependencies listed in [`requirements.txt`](requirements.txt)
+- Docker (optional, if you prefer to use the included `Dockerfile`)
 
+### Why Python 3.12?
 
-Get Started
-Clone or download the repository and install the dependencies:
+This project uses `googletrans==4.0.0-rc1`, which is not compatible with Python 3.13 and later. The pinned release also relies on older HTTP dependencies.
 
+## Getting started
+
+Install the dependencies:
+
+```bash
 pip install -r requirements.txt
-Place the .po file that you want to translate inside:
+```
 
-translation_input/
-For example:
+Place the `.po` file you want to translate in `translation_input/`. For example:
 
+```text
 translation_input/messages.po
-An example PO file is included in:
+```
 
-examples/example_messages.po
-You can copy this into the input directory if you want to try the script:
+An example PO file is available at [`examples/example_messages.po`](examples/example_messages.po). To use it:
 
+```bash
 cp examples/example_messages.po translation_input/
-Run the Translation
-Run:
+```
 
+## Run a translation
+
+Start the script:
+
+```bash
 python script.py
-The script will ask for the PO filename:
+```
 
+When prompted, enter the PO filename (not the full path). The script looks for it in `translation_input/`:
+
+```text
 Enter the PO filename, for example example_messages.po: example_messages.po
-Enter the filename only. The script automatically looks inside translation_input/.
+```
 
-Next, enter the destination language code:
+Then enter the destination language code:
 
+```text
 Enter the destination language code, for example fr, de, hi, or es: fr
-For example:
+```
 
-fr — French
-de — German
-hi - Hindi
-es — Spanish
-it — Italian
-pt — Portuguese
-nl — Dutch
-The script validates the language code before attempting the translation.
+Some example language codes:
 
-Output
-Translated files are automatically saved inside:
+| Code | Language |
+| --- | --- |
+| `fr` | French |
+| `de` | German |
+| `hi` | Hindi |
+| `es` | Spanish |
+| `it` | Italian |
+| `pt` | Portuguese |
+| `nl` | Dutch |
 
-translation_output/
-The destination language code is appended to the filename.
+The script validates the language code before translating.
 
-For example:
+## Output
 
-translation_input/example_messages.po
-translated to French becomes:
+Translated files are saved in `translation_output/`. The destination language code is appended to the output filename.
 
+For example, translating `translation_input/example_messages.po` to French creates:
+
+```text
 translation_output/example_messages_fr.po
-Messages that already contain a translation are skipped.
+```
 
-Translation errors are logged to:
+Translation errors are logged to `translation.log`.
 
-translation.log
-Project Structure
+## Project structure
+
+```text
 translation_tool/
 ├── Dockerfile
 ├── examples/
@@ -80,29 +94,28 @@ translation_tool/
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
-├── script.py
+└── script.py
+```
 
-examples/ contains a reference PO file.
-translation_input/ contains files to be translated.
-translation_output/ contains generated translations.
+- `examples/` contains a reference PO file.
+- `translation_input/` contains files to be translated.
+- `translation_output/` contains generated translations.
+- Files placed in `translation_input/` and generated in `translation_output/` are ignored by Git.
 
-Files placed in translation_input/ and generated in translation_output/ are ignored by Git.
+## Notes and troubleshooting
 
+This project deliberately uses `googletrans==4.0.0-rc1`. `googletrans` is an unofficial library that communicates with Google Translate and does not require a Google Cloud Translation API key. It depends on undocumented Google Translate behavior, so it may stop working if Google changes the service.
 
-Keep in mind
-This project deliberately uses:
+If you see this error:
 
-googletrans==4.0.0-rc1
-googletrans is an unofficial Python library that communicates with Google Translate and does not require a Google Cloud Translation API key.
-
-Because it relies on undocumented Google Translate behaviour, it may stop working if Google changes the service.
-
-The pinned 4.0.0-rc1 release relies on older HTTP dependencies and is the reason this project currently requires Python 3.12 rather than Python 3.13 or later.
-
-If you encounter:
-
+```text
 ModuleNotFoundError: No module named 'cgi'
-check your Python version:
+```
 
+Check your Python version:
+
+```bash
 python --version
-You are likely running Python 3.13 or later. Use Python 3.12 to run this project.
+```
+
+You are likely running Python 3.13 or later. Use Python 3.12 for this project.
