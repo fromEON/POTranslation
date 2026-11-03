@@ -6,6 +6,7 @@ The script reads a PO file, translates messages whose `msgstr` is empty, and sav
 
 ## Requirements
 
+- Docker
 - Python 3.12
 - Dependencies listed in [`requirements.txt`](requirements.txt)
 - Docker (optional, if you prefer to use the included `Dockerfile`)
@@ -16,11 +17,20 @@ This project uses `googletrans==4.0.0-rc1`, which is not compatible with Python 
 
 ## Getting started
 
-Install the dependencies:
+Build the Docker Image:
 
 ```bash
-pip install -r requirements.txt
+docker build -t translation-tool .
 ```
+
+```bash
+docker run --rm -it \
+  -v "$(pwd)/translation_input:/app/translation_input" \
+  -v "$(pwd)/translation_output:/app/translation_output" \
+  translation-tool
+```
+
+
 
 Place the `.po` file you want to translate in `translation_input/`. For example:
 
@@ -35,12 +45,6 @@ cp examples/example_messages.po translation_input/
 ```
 
 ## Run a translation
-
-Start the script:
-
-```bash
-python script.py
-```
 
 When prompted, enter the PO filename (not the full path). The script looks for it in `translation_input/`:
 
