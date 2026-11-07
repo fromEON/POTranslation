@@ -38,12 +38,6 @@ Place the `.po` file you want to translate in `translation_input/`. For example:
 translation_input/messages.po
 ```
 
-An example PO file is available at [`examples/example_messages.po`](examples/example_messages.po). To use it:
-
-```bash
-cp examples/example_messages.po translation_input/
-```
-
 ## Run a translation
 
 When prompted, enter the PO filename (not the full path). The script looks for it in `translation_input/`:
