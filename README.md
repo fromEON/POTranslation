@@ -23,10 +23,10 @@ Build the Docker Image:
 docker build -t translation-tool .
 ```
 
-```bash
-docker run --rm -it \
-  -v "$(pwd)/translation_input:/app/translation_input" \
-  -v "$(pwd)/translation_output:/app/translation_output" \
+```powershell
+docker run --rm -it `
+  -v "${PWD}/translation_input:/app/translation_input" `
+  -v "${PWD}/translation_output:/app/translation_output" `
   translation-tool
 ```
 
